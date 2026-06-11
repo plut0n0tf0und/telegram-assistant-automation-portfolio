@@ -17,12 +17,12 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-[#050505] text-[#f3f4f6] font-sans antialiased px-4 sm:px-8 pt-20 pb-10 sm:pt-24 max-w-7xl mx-auto space-y-12 relative">
       
-      {/* Floating Outbound Back Button (Top-Left of Screen) */}
+      {/* Outbound Back Button (Top-Left of Page - scrolls away naturally) */}
       <a 
         href="https://github.com/plut0n0tf0und" 
         target="_blank" 
         rel="noopener noreferrer" 
-        className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 resume-link-btn text-base py-2.5 px-5 bg-black/70 backdrop-blur-md border border-neutral-800 text-white rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2 shadow-lg"
+        className="absolute top-4 left-4 sm:top-6 sm:left-6 z-50 resume-link-btn text-base py-2.5 px-5 bg-black/70 backdrop-blur-md border border-neutral-800 text-white rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2 shadow-lg"
       >
         <ArrowLeft className="w-5 h-5" />
         <span>Back to Portfolio</span>
