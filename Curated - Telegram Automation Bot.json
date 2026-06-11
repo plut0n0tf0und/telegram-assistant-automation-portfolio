@@ -1,0 +1,497 @@
+{
+  "name": "Telegram Automation Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "items",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    },
+                    "id": "3dccca7b-135d-4ef9-b923-e5a35528b317"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5766e262-b27d-4023-8c62-23478f3c5ec0",
+                    "leftValue": "={{ $json.callback_query.message.reply_markup.inline_keyboard[0][0] }}",
+                    "rightValue": "Send",
+                    "operator": {
+                      "type": "object",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "f890b463-0af7-400e-bf61-014c69f0e274",
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "support",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "4052dd36-db94-478f-b770-e5787a1b0cb5",
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "yet",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "69426ee8-388a-4123-8223-18b1a438e077",
+                    "leftValue": "={{ $json.callback_query.data }}",
+                    "rightValue": "call",
+                    "operator": {
+                      "type": "string",
+                      "operation": "endsWith"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -208,
+        192
+      ],
+      "id": "0b36f257-5193-45e1-a255-5a9f2e7bed4c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "callback_query"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -608,
+        224
+      ],
+      "id": "13a60c3b-e65b-467c-bae9-ab69cb4340a3",
+      "name": "Telegram Trigger4",
+      "webhookId": "61934a22-ed20-48c7-ba70-a40b1e7a4820",
+      "credentials": {
+        "telegramApi": {
+          "id": "OsMZiYemefU0bhhO",
+          "name": "Telegram Shop Fresh Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger4').first().json.callback_query.message.chat.id }}\n",
+        "text": "=Hello there,\n{{ $json.msg }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Order Now",
+                    "additionalFields": {
+                      "callback_data": "Not_available_yet"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        16
+      ],
+      "id": "254b1873-5837-4da4-b791-1405415250a9",
+      "name": "Send List",
+      "webhookId": "67142dec-f0b6-4a03-9cbb-59400cd74d79",
+      "credentials": {
+        "telegramApi": {
+          "id": "OsMZiYemefU0bhhO",
+          "name": "Telegram Shop Fresh Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "=Hello {{ $json.message.chat.first_name }},\nChoose an option:",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "View Today Items",
+                    "additionalFields": {
+                      "callback_data": "Send_items"
+                    }
+                  },
+                  {
+                    "text": "Support",
+                    "additionalFields": {
+                      "callback_data": "Send_support"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        224
+      ],
+      "id": "792afca6-7cae-419f-847d-375b953073ea",
+      "name": "Send  Menu",
+      "webhookId": "67142dec-f0b6-4a03-9cbb-59400cd74d79",
+      "credentials": {
+        "telegramApi": {
+          "id": "OsMZiYemefU0bhhO",
+          "name": "Telegram Shop Fresh Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.callback_query.message.chat.id }}",
+        "text": "=Please Call this numeber",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "+ 91 xxxxxxxxxx",
+                    "additionalFields": {
+                      "callback_data": "call"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        432
+      ],
+      "id": "737a0a0a-18dc-4592-b2b1-103ebb1af535",
+      "name": "Send  Support",
+      "webhookId": "67142dec-f0b6-4a03-9cbb-59400cd74d79",
+      "credentials": {
+        "telegramApi": {
+          "id": "OsMZiYemefU0bhhO",
+          "name": "Telegram Shop Fresh Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger4').first().json.callback_query.message.chat.id }}\n",
+        "text": "={{ $json.msg }}",
+        "replyMarkup": "inlineKeyboard",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        640
+      ],
+      "id": "091aa838-1ca6-4f54-87e1-6b475bd066ab",
+      "name": "Send List1",
+      "webhookId": "67142dec-f0b6-4a03-9cbb-59400cd74d79",
+      "credentials": {
+        "telegramApi": {
+          "id": "OsMZiYemefU0bhhO",
+          "name": "Telegram Shop Fresh Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const msg =\n  \"🚧 *Feature Not Available Yet*\\n\\n\" +\n  \"This ordering option is currently under development and will be available soon.\\n\\n\";\n\nreturn [{ json: { msg } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        640
+      ],
+      "id": "fdb4563a-d68f-4644-9837-c27fdcb43d90",
+      "name": "Code for Not_available",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all().map(i => i.json);\n\nconst cols = [\n  { key: \"ItemName\", label: \"Item\", max: 26, align: \"left\" },\n  { key: \"MinQuantity\", label: \"Qty\", max: 8, align: \"left\" },\n  { key: \"ItemPrice\", label: \"Price\", max: 8, align: \"right\" },\n  { key: \"Today Availability\", label: \"Avail\", max: 7, align: \"center\" },\n];\n\nconst toText = (v) => (v ?? \"\").toString().trim();\n\nconst truncate = (txt, w) => {\n  txt = toText(txt);\n  if (txt.length <= w) return txt;\n  return txt.slice(0, w - 1) + \"…\";\n};\n\nconst pad = (txt, w, align = \"left\") => {\n  txt = toText(txt);\n  if (txt.length > w) txt = truncate(txt, w);\n\n  if (align === \"right\") return txt.padStart(w, \" \");\n  if (align === \"center\") {\n    const left = Math.floor((w - txt.length) / 2);\n    const right = w - txt.length - left;\n    return \" \".repeat(left) + txt + \" \".repeat(right);\n  }\n  return txt.padEnd(w, \" \");\n};\n\n// ✅ compute perfect widths based on label + data (capped by max)\nconst widths = {};\nfor (const c of cols) {\n  const longest = Math.max(\n    c.label.length,\n    ...rows.map(r => toText(r[c.key]).length)\n  );\n  widths[c.key] = Math.min(longest, c.max);\n}\n\nlet msg = \"🛒 TODAY ITEMS\\n\";\nmsg += \"```\\n\";\n\nconst header = cols.map(c => pad(c.label, widths[c.key], \"center\")).join(\" | \");\nconst sep    = cols.map(c => \"-\".repeat(widths[c.key])).join(\"-+-\");\n\nmsg += header + \"\\n\";\nmsg += sep + \"\\n\";\n\nfor (const r of rows) {\n  // optional: nicer price formatting\n  const price = toText(r[\"ItemPrice\"]);\n  const priceTxt = price ? (price.includes(\"₹\") ? price : `₹${price}`) : \"\";\n\n  msg += cols.map(c => {\n    const value =\n      c.key === \"ItemPrice\" ? priceTxt :\n      c.key === \"Today Availability\" ? (toText(r[c.key]) || \"—\") :\n      toText(r[c.key]) || \"—\";\n\n    return pad(value, widths[c.key], c.align);\n  }).join(\" | \") + \"\\n\";\n}\n\nmsg += \"```\";\n\nreturn [{ json: { msg } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        16
+      ],
+      "id": "15bc4333-4a3b-4080-988c-52fb251c8411",
+      "name": "Code for list",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "1PVCHYKGt_pe950eZithrYohu3Rf0hWypzL-eYJAg9hw",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "ItemsList",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PVCHYKGt_pe950eZithrYohu3Rf0hWypzL-eYJAg9hw/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        304,
+        16
+      ],
+      "id": "94e46407-2312-4b26-8a15-888ed199172f",
+      "name": "Get row(s) in sheet4",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleApi": {
+          "id": "4MD9WBUh5RXm9kII",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.callback_query.message.chat.id }}",
+        "text": "=Our team will call you back",
+        "replyMarkup": "inlineKeyboard",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        304,
+        816
+      ],
+      "id": "3e42b50f-4c0c-4d9e-85ae-69d024d015ec",
+      "name": "Send  Support1",
+      "webhookId": "67142dec-f0b6-4a03-9cbb-59400cd74d79",
+      "credentials": {
+        "telegramApi": {
+          "id": "OsMZiYemefU0bhhO",
+          "name": "Telegram Shop Fresh Bot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send  Menu",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send  Support",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code for Not_available",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send  Support1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger4": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code for Not_available": {
+      "main": [
+        [
+          {
+            "node": "Send List1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code for list": {
+      "main": [
+        [
+          {
+            "node": "Send List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet4": {
+      "main": [
+        [
+          {
+            "node": "Code for list",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "c1e58ea5-6cd7-47a7-930c-2fcb1214e265",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4fd059377ce88b210378422e3db8dead5ceb73aea8f7d7f94c30211eb1e90315"
+  },
+  "id": "EsjVmQPCB62kClVJzV28Z",
+  "tags": []
+}
