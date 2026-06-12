@@ -77,74 +77,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Main Centerpiece: n8n JSON Canvas */}
-      <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
-              n8n Active Workflow Canvas
-            </h2>
-            <p className="text-base text-gray-400 leading-relaxed">
-              Interactive structural layout parsed directly from the production n8n JSON file. Pan/Zoom to explore.
-            </p>
-          </div>
-          <span className="text-xs sm:text-sm font-mono text-gray-400 bg-neutral-900 border border-neutral-850 px-4 py-1.5 rounded-full flex items-center gap-2 shrink-0 select-none">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            36 Nodes Rendered
-          </span>
-        </div>
-
+      {/* Main Centerpiece: n8n JSON Canvas (Workflow Hero Canvas) */}
+      <section className="py-2">
         <WorkflowCanvas />
       </section>
 
-      {/* Centered Telegram Verification mock with phone notch wrapper */}
-      <section className="flex flex-col gap-10 pt-6">
-        
-        {/* Full-width block */}
-        <div className="space-y-6 text-center max-w-4xl mx-auto">
-          <div className="space-y-3">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">
-              Execution Flow & Verification
-            </h2>
-            <p className="text-base sm:text-[18px] text-gray-300 leading-relaxed">
-              When a user interacts with the Telegram chat interface below, it triggers the active n8n automation workflow in real-time:
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto pt-2">
-            <div className="flex items-center gap-2.5 text-left bg-neutral-950 border border-[#262626] rounded-xl p-4 flex-1">
-              <Check className="w-5 h-5 text-neutral-400 shrink-0 mt-0.5" />
-              <span className="text-base text-gray-300">
-                <strong className="text-white">Instant Data Lookup:</strong> Reads spreadsheet items and formats a clean reply.
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5 text-left bg-neutral-950 border border-[#262626] rounded-xl p-4 flex-1">
-              <Check className="w-5 h-5 text-neutral-400 shrink-0 mt-0.5" />
-              <span className="text-base text-gray-300">
-                <strong className="text-white">Smart Routing:</strong> Routes orders and tickets automatically via logic branches.
-              </span>
-            </div>
-          </div>
+      {/* Telegram Experience Demo Section */}
+      <section className="flex flex-col gap-6 pt-2">
+        <div className="space-y-2 text-center max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">
+            Telegram Experience Demo
+          </h2>
+          <p className="text-base sm:text-[18px] text-gray-300 leading-relaxed">
+            Simulated interaction with the live shop bot interface. Click the options below to trigger automated responses.
+          </p>
         </div>
 
         {/* Premium Bezel-less Smartphone Mockup Centered holding TelegramMock */}
-        <div className="flex flex-col items-center justify-center w-full relative py-6">
-          <div className="w-full text-center mb-6">
-            <h4 className="text-xs sm:text-sm font-mono text-gray-500 uppercase tracking-wider">
-              Simulated Interaction Verification
-            </h4>
-          </div>
-          
+        <div className="flex flex-col items-center justify-center w-full relative py-4">
           {/* Interactive Phone Container with Buttons */}
           <div className="relative mx-auto">
-            {/* Volume Up Button (hidden on mobile to prevent overflow) */}
+            {/* Volume Up Button */}
             <div className="hidden sm:block absolute -left-[14px] top-[120px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg" />
-            {/* Volume Down Button (hidden on mobile to prevent overflow) */}
+            {/* Volume Down Button */}
             <div className="hidden sm:block absolute -left-[14px] top-[180px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg" />
-            {/* Action / Power Button (hidden on mobile to prevent overflow) */}
+            {/* Action / Power Button */}
             <div className="hidden sm:block absolute -right-[14px] top-[150px] w-[4px] h-[65px] bg-[#222] border-l border-[#333] rounded-r-md shadow-lg" />
 
-            {/* Premium Outer Chassis (Fully responsive with arbitrary breakpoints) */}
+            {/* Premium Outer Chassis */}
             <div className="w-[280px] min-[360px]:w-[320px] sm:w-[375px] h-[530px] min-[360px]:h-[600px] sm:h-[670px] bg-[#0c0c0e] border-[8px] min-[360px]:border-[10px] sm:border-[12px] border-[#1e1e22] rounded-[38px] min-[360px]:rounded-[44px] sm:rounded-[52px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] ring-1 ring-white/10 overflow-hidden relative flex flex-col transition-all duration-300">
               
               {/* Dynamic Island Floating Notch */}
@@ -160,6 +120,84 @@ export default function Home() {
                 <TelegramMock />
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Execution Flow & Verification Section */}
+      <section className="space-y-6 pt-4 max-w-4xl mx-auto w-full">
+        <div className="space-y-2 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">
+            Execution Flow & Verification
+          </h2>
+          <p className="text-base sm:text-[18px] text-gray-300 leading-relaxed">
+            Interactive simulation triggers active n8n automation pathways on backend endpoints:
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto pt-2 w-full">
+          <div className="flex items-center gap-2.5 text-left bg-neutral-950 border border-[#262626] rounded-xl p-4 flex-1">
+            <Check className="w-5 h-5 text-neutral-400 shrink-0 mt-0.5" />
+            <span className="text-base text-gray-300">
+              <strong className="text-white">Instant Data Lookup:</strong> Reads spreadsheet items and formats a clean reply.
+            </span>
+          </div>
+          <div className="flex items-center gap-2.5 text-left bg-neutral-950 border border-[#262626] rounded-xl p-4 flex-1">
+            <Check className="w-5 h-5 text-neutral-400 shrink-0 mt-0.5" />
+            <span className="text-base text-gray-300">
+              <strong className="text-white">Smart Routing:</strong> Routes orders and tickets automatically via logic branches.
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Technical Details Section */}
+      <section className="space-y-6 pt-4 border-t border-[#262626]">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-bold text-white tracking-wide">
+            Technical Details
+          </h2>
+          <p className="text-base text-gray-400 leading-relaxed">
+            Integration architecture, technology stack, and self-hosted infrastructure details.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="component-card p-6 space-y-3">
+            <h3 className="text-lg font-bold text-white">n8n Automation Engine</h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Self-hosted workflow manager orchestrating chat states, conditional logic, and formatting sheets data.
+            </p>
+          </div>
+          <div className="component-card p-6 space-y-3">
+            <h3 className="text-lg font-bold text-white">Telegram Bot API</h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Real-time webhook integration delivering response payloads to users with sub-150ms latency.
+            </p>
+          </div>
+          <div className="component-card p-6 space-y-3">
+            <h3 className="text-lg font-bold text-white">Google Sheets Integration</h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Utilized as a serverless store database, allowing instant inventory edits without updating backend code.
+            </p>
+          </div>
+          <div className="component-card p-6 space-y-3">
+            <h3 className="text-lg font-bold text-white">Next.js & React Showcase</h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Portfolio landing container featuring interactive n8n JSON canvas parsing and mobile chat simulators.
+            </p>
+          </div>
+          <div className="component-card p-6 space-y-3">
+            <h3 className="text-lg font-bold text-white">Docker Infrastructure</h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Containerized host environment run via Docker Compose on VPS with automated secure SSL reverse-proxy.
+            </p>
+          </div>
+          <div className="component-card p-6 space-y-3">
+            <h3 className="text-lg font-bold text-white">JSON Parser Engine</h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Custom SVG connection routing math that maps 2D coordinates into responsive node graph charts.
+            </p>
           </div>
         </div>
       </section>
