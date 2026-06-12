@@ -26,8 +26,86 @@ export default function TelegramMock() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [timeStr, setTimeStr] = useState("9:41");
 
+  const timeoutIdsRef = useRef<NodeJS.Timeout[]>([]);
+
+  const clearAllTimeouts = () => {
+    timeoutIdsRef.current.forEach(clearTimeout);
+    timeoutIdsRef.current = [];
+  };
+
+  const getTimestamp = () => {
+    const now = new Date();
+    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const startAutomatedDemo = () => {
+    clearAllTimeouts();
+    setCart({ apple: 0, orange: 0 });
+    setMessages([]);
+    setIsTyping(false);
+
+    // 1. User -> View Today's Items (0.6s)
+    const t1 = setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: "demo-user-1",
+          sender: "user",
+          text: "View Today's Items",
+          timestamp: getTimestamp()
+        }
+      ]);
+    }, 600);
+
+    // 2. Bot typing indicator (1.2s)
+    const t2 = setTimeout(() => {
+      setIsTyping(true);
+    }, 1200);
+
+    // 3. Bot -> Fetching inventory... (2.2s)
+    const t3 = setTimeout(() => {
+      setIsTyping(false);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: "demo-bot-1",
+          sender: "bot",
+          text: "🔍 Fetching inventory from Google Sheets...",
+          timestamp: getTimestamp()
+        }
+      ]);
+    }, 2200);
+
+    // 4. Bot typing indicator (2.8s)
+    const t4 = setTimeout(() => {
+      setIsTyping(true);
+    }, 2800);
+
+    // 5. Bot -> Product List (3.8s)
+    const t5 = setTimeout(() => {
+      setIsTyping(false);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: "demo-bot-2",
+          sender: "bot",
+          text: "🛒 *TODAY ITEMS LIST*\n```\nItem      | Qty | Price | Avail \n----------+-----+-------+-------\nApples    | 50  | ₹120  |  Yes  \nOranges   | 35  |  ₹80  |  Yes  \nBananas   |  0  |  ₹40  |  No   \nPineapple | 12  | ₹180  |  Yes  \n```",
+          timestamp: getTimestamp(),
+          isTable: true,
+          buttons: [
+            { text: "🍎 Apple (+1)", action: "add_apple" },
+            { text: "🍊 Orange (+1)", action: "add_orange" },
+            { text: "💳 Book & Pay", action: "checkout" }
+          ]
+        }
+      ]);
+    }, 3800);
+
+    timeoutIdsRef.current = [t1, t2, t3, t4, t5];
+  };
+
   useEffect(() => {
-    resetChat();
+    startAutomatedDemo();
     
     // Set dynamic client time on mount to prevent SSR hydration warnings
     const updateTime = () => {
@@ -36,7 +114,10 @@ export default function TelegramMock() {
     };
     updateTime();
     const interval = setInterval(updateTime, 60000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearAllTimeouts();
+    };
   }, []);
 
   useEffect(() => {
@@ -47,28 +128,6 @@ export default function TelegramMock() {
       });
     }
   }, [messages, isTyping]);
-
-  const getTimestamp = () => {
-    const now = new Date();
-    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
-
-  const resetChat = () => {
-    setCart({ apple: 0, orange: 0 });
-    setMessages([
-      {
-        id: "welcome-msg",
-        sender: "bot",
-        text: "Hello User,\nChoose an option:",
-        timestamp: getTimestamp(),
-        buttons: [
-          { text: "View Today Items", action: "Send_items" },
-          { text: "Support", action: "Send_support" }
-        ]
-      }
-    ]);
-    setIsTyping(false);
-  };
 
   const simulateBotReply = (responseText: string, buttons?: Array<{ text: string; action: string }>, isTable = false) => {
     setIsTyping(true);
@@ -195,10 +254,10 @@ export default function TelegramMock() {
   };
 
   return (
-    <div className="w-full h-full bg-[#0e1621] flex flex-col">
+    <div className="w-full h-full bg-[var(--color-background)] flex flex-col">
       
       {/* iOS Status Bar (Designed to sit perfectly under Dynamic Island) */}
-      <div className="h-11 px-5 sm:px-6 pt-4 pb-1 bg-[#17212b] flex items-center justify-between text-xs text-white font-semibold select-none z-20 shrink-0">
+      <div className="h-11 px-5 sm:px-6 pt-4 pb-1 bg-[var(--color-surface)] border-b border-[var(--color-outline-variant)] flex items-center justify-between text-xs text-white font-semibold select-none z-20 shrink-0">
         <span className="font-sans leading-none tracking-tight text-[13px]">{timeStr}</span>
         <div className="flex items-center gap-1.5 text-white/90">
           {/* Battery Icon */}
@@ -210,42 +269,38 @@ export default function TelegramMock() {
       </div>
       
       {/* Real Telegram Dark Title Header */}
-      <div className="px-4 py-3 bg-[#17212b] border-b border-[#101921] flex items-center justify-between shrink-0">
+      <div className="px-4 py-3 bg-[var(--color-surface)] border-b border-[var(--color-outline)] flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#243746] flex items-center justify-center border border-[#304758]">
-            <Robot weight="duotone" className="w-5.5 h-5.5 text-[#64b5f6]" />
+          <div className="w-10 h-10 rounded-full bg-[var(--color-surface-container-high)] flex items-center justify-center border border-[var(--color-outline)]">
+            <Robot weight="duotone" className="w-5.5 h-5.5 text-white" />
           </div>
           <div>
             <h5 className="text-base font-bold text-white tracking-wide leading-tight">
               Fresh Shop Bot
             </h5>
-            <p className="text-xs text-[#64b5f6] font-mono mt-0.5">bot</p>
+            <p className="text-xs text-[var(--color-on-surface-variant)] font-mono mt-0.5">bot</p>
           </div>
         </div>
         
         <button 
-          onClick={resetChat}
+          onClick={startAutomatedDemo}
           className="p-2 rounded hover:bg-white/5 text-gray-400 hover:text-white transition-colors"
-          title="Reset Conversation"
+          title="Restart Demo"
         >
           <ArrowCounterClockwise className="w-5 h-5" />
         </button>
       </div>
 
       {/* Message History area */}
-      <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto space-y-4 custom-scrollbar bg-[#0e1621]">
+      <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto space-y-4 custom-scrollbar bg-[var(--color-background)]">
         {messages.map((m) => (
           <div
             key={m.id}
-            className={`flex flex-col ${m.sender === "user" ? "items-end" : "items-start"}`}
+            className={`flex flex-col animate-message-appear ${m.sender === "user" ? "items-end" : "items-start"}`}
           >
             {/* Message Bubble */}
             <div
-              className={`max-w-[85%] rounded-[10px] p-3 text-base relative leading-relaxed ${
-                m.sender === "user"
-                  ? "bg-[#2b5278] text-white rounded-tr-none"
-                  : "bg-[#182533] text-gray-100 border border-[#233140] rounded-tl-none"
-              }`}
+              className={m.sender === "user" ? "chat-bubble-user" : "chat-bubble-bot"}
             >
               <div className="whitespace-pre-wrap font-sans">
                 {m.isTable ? (
@@ -263,7 +318,7 @@ export default function TelegramMock() {
                           href="https://checkout.mockpay.example.com/checkout" 
                           target="_blank" 
                           rel="noreferrer" 
-                          className="text-[#64b5f6] hover:underline font-bold"
+                          className="text-white underline hover:text-white/80 font-bold"
                         >
                           {payText}
                         </a>
@@ -277,20 +332,20 @@ export default function TelegramMock() {
               </div>
 
               {/* read checks */}
-              <div className="flex items-center justify-end gap-1 mt-1.5 text-[10px] text-gray-400 text-right select-none font-mono">
+              <div className="flex items-center justify-end gap-1 mt-1.5 text-[10px] opacity-60 text-right select-none font-mono">
                 <span>{m.timestamp}</span>
-                {m.sender === "user" && <Checks className="w-4 h-4 text-[#64b5f6]" />}
+                {m.sender === "user" && <Checks className="w-4 h-4 text-white/85" />}
               </div>
             </div>
 
             {/* Buttons layout */}
             {m.buttons && m.buttons.length > 0 && (
-              <div className="w-full max-w-[85%] mt-2 grid grid-cols-2 gap-1.5">
+              <div className="w-full max-w-[85%] mt-2 grid grid-cols-2 gap-1.5 animate-message-appear">
                 {m.buttons.map((btn, bidx) => (
                   <button
                     key={bidx}
                     onClick={() => handleButtonClick(btn.action, btn.text)}
-                    className="col-span-1 bg-[#213040] hover:bg-[#2c3e50] active:bg-[#1a2533] border border-[#2b3e50] text-sm font-bold text-[#64b5f6] py-2 px-3 rounded-[6px] text-center transition-colors select-none duration-150 cursor-pointer active:scale-[0.98]"
+                    className="col-span-1 bg-[var(--color-surface-container-high)] hover:bg-[var(--color-surface-container-highest)] border border-[var(--color-outline)] text-sm font-bold text-white py-2 px-3 rounded-[6px] text-center transition-colors select-none duration-150 cursor-pointer active:scale-[0.98]"
                   >
                     {btn.text}
                   </button>
@@ -302,7 +357,7 @@ export default function TelegramMock() {
 
         {/* typing animation */}
         {isTyping && (
-          <div className="flex items-center gap-1.5 bg-[#182533] border border-[#233140] px-4 py-2.5 rounded-[10px] rounded-tl-none max-w-[90px]">
+          <div className="flex items-center gap-1.5 bg-[var(--color-surface-container)] border border-[var(--color-outline)] px-4 py-2.5 rounded-[10px] rounded-tl-none max-w-[90px] animate-message-appear">
             <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
             <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
             <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
@@ -311,18 +366,18 @@ export default function TelegramMock() {
       </div>
 
       {/* footer bar */}
-      <div className="p-4 bg-[#17212b] border-t border-[#101921] flex items-center gap-3 shrink-0">
-        <div className="flex-1 bg-[#182533] border border-[#233140] px-4 py-2.5 rounded-full text-sm text-gray-400 flex items-center select-none justify-between">
+      <div className="p-4 bg-[var(--color-surface)] border-t border-[var(--color-outline)] flex items-center gap-3 shrink-0">
+        <div className="flex-1 bg-[var(--color-surface-container)] border border-[var(--color-outline)] px-4 py-2.5 rounded-full text-sm text-gray-400 flex items-center select-none justify-between">
           <span>Interaction disabled. Use buttons above.</span>
           <List className="w-5 h-5 text-gray-400" />
         </div>
-        <div className="p-2.5 bg-[#2b5278] hover:bg-[#34628e] text-white rounded-full transition-colors cursor-pointer">
+        <div className="p-2.5 bg-[var(--color-primary)] text-[var(--color-on-primary)] rounded-full transition-opacity hover:opacity-90 cursor-pointer">
           <PaperPlaneTilt className="w-5 h-5" />
         </div>
       </div>
 
       {/* Home Indicator */}
-      <div className="h-6 bg-[#17212b] flex items-center justify-center pb-2 shrink-0 z-20 select-none">
+      <div className="h-6 bg-[var(--color-surface)] flex items-center justify-center pb-2 shrink-0 z-20 select-none">
         <div className="w-32 h-[4px] bg-white/20 rounded-full" />
       </div>
     </div>

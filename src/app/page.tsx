@@ -41,7 +41,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HR-Friendly Summary / Impact Card */}
+      {/* HR-Friendly Summary / Impact Card (Project Overview) */}
       <section className="component-card p-8 sm:p-10 flex flex-col lg:flex-row justify-between gap-8">
         <div className="space-y-4 lg:max-w-3xl">
           <div className="flex items-center gap-2.5">
@@ -77,29 +77,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Main Centerpiece: n8n JSON Canvas */}
-      <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <h2 className="text-xl sm:text-2xl font-extrabold tracking-[-0.03em] text-white">
-              n8n Active Workflow Canvas
-            </h2>
-            <p className="text-sm text-[var(--color-on-surface-variant)] leading-relaxed">
-              Interactive structural layout parsed directly from the production n8n JSON file. Pan/Zoom to explore.
-            </p>
-          </div>
-          <span className="text-xs sm:text-sm font-mono text-gray-400 bg-neutral-900 border border-neutral-850 px-4 py-1.5 rounded-full flex items-center gap-2 shrink-0 select-none">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            36 Nodes Rendered
-          </span>
-        </div>
-
-        <WorkflowCanvas />
-      </section>
-
-      {/* Centered Telegram Verification mock with phone notch wrapper */}
+      {/* Interactive Telegram Demo (Moved higher) */}
       <section className="flex flex-col gap-10 pt-6">
-        
         {/* Full-width block */}
         <div className="space-y-6 text-center max-w-4xl mx-auto">
           <div className="space-y-3">
@@ -136,19 +115,18 @@ export default function Home() {
           </div>
           
           {/* Interactive Phone Container with Buttons */}
-          <div className="relative mx-auto">
+          <div className="relative mx-auto w-full flex justify-center">
             {/* Volume Up Button (hidden on mobile to prevent overflow) */}
-            <div className="hidden sm:block absolute -left-[14px] top-[120px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg" />
+            <div className="hidden sm:block absolute left-[calc(50%-202px)] top-[120px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg z-10" />
             {/* Volume Down Button (hidden on mobile to prevent overflow) */}
-            <div className="hidden sm:block absolute -left-[14px] top-[180px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg" />
+            <div className="hidden sm:block absolute left-[calc(50%-202px)] top-[180px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg z-10" />
             {/* Action / Power Button (hidden on mobile to prevent overflow) */}
-            <div className="hidden sm:block absolute -right-[14px] top-[150px] w-[4px] h-[65px] bg-[#222] border-l border-[#333] rounded-r-md shadow-lg" />
+            <div className="hidden sm:block absolute right-[calc(50%-202px)] top-[150px] w-[4px] h-[65px] bg-[#222] border-l border-[#333] rounded-r-md shadow-lg z-10" />
 
-            {/* Premium Outer Chassis (Fully responsive with arbitrary breakpoints) */}
-            <div className="w-[280px] min-[360px]:w-[320px] sm:w-[375px] h-[530px] min-[360px]:h-[600px] sm:h-[670px] bg-[#0c0c0e] border-[8px] min-[360px]:border-[10px] sm:border-[12px] border-[#1e1e22] rounded-[38px] min-[360px]:rounded-[44px] sm:rounded-[52px] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] ring-1 ring-white/10 overflow-hidden relative flex flex-col transition-all duration-300">
-              
+            {/* Simple & Premium Smartphone Mockup Chassis */}
+            <div className="phone-container-frame mx-auto">
               {/* Dynamic Island Floating Notch */}
-              <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-[110px] h-[28px] bg-black rounded-full z-45 flex items-center justify-between px-3.5 shadow-inner border border-neutral-900/50 select-none pointer-events-none">
+              <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-[110px] h-[28px] bg-black rounded-full z-45 flex items-center justify-between px-3.5 shadow-inner border border-neutral-950 select-none pointer-events-none">
                 {/* Camera Lens Reflection */}
                 <div className="w-[7px] h-[7px] rounded-full bg-[#141424] border border-[#2d2d3d] shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]" />
                 {/* Green Active Dot */}
@@ -156,12 +134,32 @@ export default function Home() {
               </div>
 
               {/* Edge-to-edge Screen Container */}
-              <div className="w-full h-full bg-[#0e1621] rounded-[30px] min-[360px]:rounded-[34px] sm:rounded-[40px] overflow-hidden flex flex-col relative">
+              <div className="w-full h-full rounded-[30px] overflow-hidden flex flex-col relative">
                 <TelegramMock />
               </div>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Main Centerpiece: n8n JSON Canvas */}
+      <section className="space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-[-0.03em] text-white">
+              n8n Active Workflow Canvas
+            </h2>
+            <p className="text-sm text-[var(--color-on-surface-variant)] leading-relaxed">
+              Interactive structural layout parsed directly from the production n8n JSON file. Pan/Zoom to explore.
+            </p>
+          </div>
+          <span className="text-xs sm:text-sm font-mono text-gray-400 bg-neutral-900 border border-neutral-850 px-4 py-1.5 rounded-full flex items-center gap-2 shrink-0 select-none">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            36 Nodes Rendered
+          </span>
+        </div>
+
+        <WorkflowCanvas />
       </section>
 
       {/* Footer (Left or right aligned text layout only in mobile views) */}
