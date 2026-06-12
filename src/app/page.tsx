@@ -81,10 +81,10 @@ export default function Home() {
       <section className="space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-wide">
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-[-0.03em] text-white">
               n8n Active Workflow Canvas
             </h2>
-            <p className="text-base text-gray-400 leading-relaxed">
+            <p className="text-sm text-[var(--color-on-surface-variant)] leading-relaxed">
               Interactive structural layout parsed directly from the production n8n JSON file. Pan/Zoom to explore.
             </p>
           </div>

@@ -147,3 +147,161 @@ pre, code {
   border-color: var(--color-primary);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
 }
+
+/* --- Workflow Canvas Custom Styles --- */
+
+/* Canvas Container */
+.workflow-canvas-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 680px;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.01) 0%,
+    rgba(255, 255, 255, 0) 100%
+  ), var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px; /* Mobile first radius */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  transition: var(--transition-smooth);
+}
+
+@media (min-width: 1024px) {
+  .workflow-canvas-container {
+    flex-direction: row;
+    border-radius: var(--radius-xl); /* 24px desktop radius */
+  }
+}
+
+.workflow-canvas-container:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Premium Surface Finish Highlight */
+.workflow-canvas-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.025),
+    transparent 20%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Zoom Controls Wrapper */
+.canvas-zoom-controls {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+  background: var(--color-surface-container);
+  border: 1px solid var(--color-outline);
+  padding: 8px;
+  border-radius: 12px;
+  transition: var(--transition-smooth);
+}
+
+@media (min-width: 1024px) {
+  .canvas-zoom-controls {
+    bottom: 24px;
+    left: 24px;
+  }
+}
+
+.canvas-zoom-btn {
+  padding: 8px;
+  color: var(--color-on-surface-variant);
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas-zoom-btn:hover {
+  color: var(--color-primary);
+  background: var(--color-surface-container-high);
+}
+
+/* Responsive Inspector Padding */
+.canvas-inspector-padding {
+  padding: 16px;
+}
+@media (min-width: 1024px) {
+  .canvas-inspector-padding {
+    padding: 24px;
+  }
+}
+
+/* Workflow Node Styling */
+.workflow-node {
+  background: var(--color-surface-container) !important;
+  border: 1px solid var(--color-outline) !important;
+  border-radius: 8px;
+  transition: var(--transition-smooth) !important;
+}
+
+.workflow-node:hover {
+  border-color: var(--color-primary) !important;
+  background: var(--color-surface-container-high) !important;
+}
+
+.workflow-node.is-selected {
+  border-color: var(--color-primary) !important;
+  background: var(--color-surface-container-high) !important;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.5) !important;
+  z-index: 20;
+}
+
+/* Connection Paths */
+.workflow-connection-path {
+  stroke: #ffffff;
+  stroke-width: 3.0px; /* Increased by 1px from 2.0px */
+  opacity: 0.35;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), stroke-width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Canvas */
+.workflow-canvas-container:hover .workflow-connection-path {
+  opacity: 0.55;
+}
+
+/* Primary active route (hovered/selected node connection) */
+.workflow-connection-path.is-active {
+  stroke-width: 3.5px; /* Increased by 1px from 2.5px */
+  opacity: 0.9 !important;
+}
+
+/* Arrow Markers */
+.workflow-arrow-default {
+  fill: #ffffff;
+  opacity: 0.35;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.workflow-canvas-container:hover .workflow-arrow-default {
+  opacity: 0.55;
+}
+
+.workflow-arrow-active {
+  fill: #ffffff;
+  opacity: 0.9;
+}
+

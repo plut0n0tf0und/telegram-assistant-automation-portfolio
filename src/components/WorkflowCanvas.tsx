@@ -275,7 +275,7 @@ export default function WorkflowCanvas() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row w-full h-[680px] bg-[#141414] border border-[var(--color-outline)] rounded-[var(--radius-xl)] overflow-hidden relative select-none">
+    <div className="workflow-canvas-container">
       
       {/* Canvas Area (Wheel zoom disabled, styled with n8n dot grid pattern) */}
       <div 
@@ -298,24 +298,24 @@ export default function WorkflowCanvas() {
         />
 
         {/* Floating Controls */}
-        <div className="absolute bottom-5 left-5 flex items-center gap-2.5 z-20 bg-[var(--color-surface-container)] border border-[var(--color-outline)] p-2 rounded-lg">
+        <div className="canvas-zoom-controls">
           <button 
             onClick={() => setScale(s => Math.min(s * 1.25, 2.0))}
-            className="canvas-control-btn p-2 text-gray-400 hover:text-white rounded hover:bg-white/10 transition-colors"
+            className="canvas-zoom-btn"
             title="Zoom In"
           >
             <MagnifyingGlassPlus className="w-5 h-5" />
           </button>
           <button 
             onClick={() => setScale(s => Math.max(s / 1.25, 0.15))}
-            className="canvas-control-btn p-2 text-gray-400 hover:text-white rounded hover:bg-white/10 transition-colors"
+            className="canvas-zoom-btn"
             title="Zoom Out"
           >
             <MagnifyingGlassMinus className="w-5 h-5" />
           </button>
           <button 
             onClick={fitToView}
-            className="canvas-control-btn p-2 text-gray-400 hover:text-white rounded hover:bg-white/10 transition-colors"
+            className="canvas-zoom-btn"
             title="Fit to Screen"
           >
             <CornersOut className="w-5 h-5" />
@@ -348,7 +348,7 @@ export default function WorkflowCanvas() {
                 markerHeight="6"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3f3f46" />
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" className="workflow-arrow-default" />
               </marker>
               <marker
                 id="arrow-hover"
@@ -359,28 +359,20 @@ export default function WorkflowCanvas() {
                 markerHeight="6"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#fff" />
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" className="workflow-arrow-active" />
               </marker>
             </defs>
             {getRenderedConnections().map((path) => {
-              const isHovered = hoveredNode === path.source || hoveredNode === path.target;
-              
-              let strokeColor = "#3f3f46"; // n8n default connection grey line
-              let strokeWidth = 2.0;
-              if (isHovered) {
-                strokeColor = "#ffffff";
-                strokeWidth = 2.5;
-              }
+              const isActive = (hoveredNode && (hoveredNode === path.source || hoveredNode === path.target)) || 
+                               (selectedNode && (selectedNode.name === path.source || selectedNode.name === path.target));
 
               return (
                 <path
                   key={path.key}
                   d={path.d}
                   fill="none"
-                  stroke={strokeColor}
-                  strokeWidth={strokeWidth}
-                  markerEnd={isHovered ? "url(#arrow-hover)" : "url(#arrow)"}
-                  className="transition-colors duration-150"
+                  className={`workflow-connection-path ${isActive ? "is-active" : ""}`}
+                  markerEnd={isActive ? "url(#arrow-hover)" : "url(#arrow)"}
                 />
               );
             })}
@@ -406,13 +398,9 @@ export default function WorkflowCanvas() {
                   height: nodeHeight,
                   position: "absolute"
                 }}
-                className={`interactive-node absolute rounded-lg border ${
-                  isSelected 
-                    ? "border-white bg-[#1a1a1a] shadow-[0_0_12px_rgba(255,255,255,0.15)] z-20" 
-                    : isHovered
-                      ? "border-neutral-500 bg-[#161616] z-10"
-                      : `${style.border} ${style.bg}`
-                } pl-4 pr-3 py-3 transition-all duration-200 select-none cursor-pointer flex flex-col justify-between ${
+                className={`interactive-node workflow-node absolute pl-4 pr-3 py-3 select-none cursor-pointer flex flex-col justify-between ${
+                  isSelected ? "is-selected" : ""
+                } ${
                   isDimmed ? "opacity-25" : "opacity-100"
                 } ${node.disabled ? "opacity-35 filter grayscale" : ""}`}
                 onClick={() => setSelectedNode(node)}
@@ -467,7 +455,7 @@ export default function WorkflowCanvas() {
         {selectedNode && (
           <>
             {/* Inspector Header */}
-            <div className="p-5 border-b border-[var(--color-outline)] flex items-center justify-between bg-black/10">
+            <div className="canvas-inspector-padding border-b border-[var(--color-outline)] flex items-center justify-between bg-black/10">
               <div className="flex items-center gap-3">
                 <div className={`p-2 rounded bg-black/40 ${getNodeStyle(selectedNode.type).color}`}>
                   {React.createElement(getNodeStyle(selectedNode.type).icon, { className: "w-5 h-5" })}
@@ -490,7 +478,7 @@ export default function WorkflowCanvas() {
             </div>
 
             {/* Inspector Body */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-5 custom-scrollbar text-base select-text">
+            <div className="flex-1 overflow-y-auto canvas-inspector-padding space-y-5 custom-scrollbar text-base select-text">
               {/* Type Metadata */}
               <div>
                 <span className="text-[10px] font-mono text-gray-500 uppercase tracking-wider block">Node Type ID</span>
