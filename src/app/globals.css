@@ -137,20 +137,15 @@ pre, code {
 
 /* Interactive Card Styles */
 .component-card {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.015) 0%,
-    rgba(255, 255, 255, 0) 100%
-  ), var(--color-surface-container-high);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: var(--color-surface-container);
+  border: 1px solid var(--color-outline);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   transition: var(--transition-smooth);
 }
 .component-card:hover {
-  background-color: var(--color-surface-container-highest);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  background-color: var(--color-surface-container-high);
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
 }
 
 /* --- Workflow Canvas Custom Styles --- */
@@ -314,14 +309,13 @@ pre, code {
 
 /* Phone Container Frame */
 .phone-container-frame {
-  width: 290px;
-  height: 580px;
-  background: #0c0c0e;
-  border: 10px solid #1e1e22; /* Realistic physical bezel frame */
-  border-radius: 42px;
-  box-shadow: 
-    0 0 0 1px rgba(255, 255, 255, 0.12), /* Inner metal shine ring */
-    0 25px 60px -15px rgba(0, 0, 0, 0.9); /* Deep soft shadow */
+  width: 100%;
+  max-width: 320px;
+  height: 560px;
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 36px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   position: relative;
   display: flex;
@@ -331,19 +325,15 @@ pre, code {
 
 @media (min-width: 360px) {
   .phone-container-frame {
-    width: 320px;
-    height: 610px;
-    border-width: 11px;
-    border-radius: 46px;
+    max-width: 340px;
+    height: 590px;
   }
 }
 
 @media (min-width: 640px) {
   .phone-container-frame {
-    width: 375px;
-    height: 680px;
-    border-width: 12px;
-    border-radius: 52px;
+    max-width: 375px;
+    height: 670px;
   }
 }
 
