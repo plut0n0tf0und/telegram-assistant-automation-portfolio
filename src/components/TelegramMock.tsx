@@ -23,7 +23,7 @@ export default function TelegramMock() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [cart, setCart] = useState({ apple: 0, orange: 0 });
-  const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const [timeStr, setTimeStr] = useState("9:41");
 
   useEffect(() => {
@@ -40,7 +40,12 @@ export default function TelegramMock() {
   }, []);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth"
+      });
+    }
   }, [messages, isTyping]);
 
   const getTimestamp = () => {
@@ -228,7 +233,7 @@ export default function TelegramMock() {
       </div>
 
       {/* Message History area */}
-      <div className="flex-1 p-5 overflow-y-auto space-y-4 custom-scrollbar bg-[#0e1621]">
+      <div ref={chatContainerRef} className="flex-1 p-5 overflow-y-auto space-y-4 custom-scrollbar bg-[#0e1621]">
         {messages.map((m) => (
           <div
             key={m.id}
@@ -303,7 +308,6 @@ export default function TelegramMock() {
             <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
           </div>
         )}
-        <div ref={chatEndRef} />
       </div>
 
       {/* footer bar */}
