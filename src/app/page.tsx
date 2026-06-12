@@ -77,37 +77,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Interactive Telegram Demo (Moved higher) */}
-      <section className="flex flex-col gap-10 pt-6">
-        {/* Full-width block */}
-        <div className="space-y-6 text-center max-w-4xl mx-auto">
+      {/* Interactive Telegram Demo */}
+      <section className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center justify-between pt-6">
+        
+        {/* Left side: Heading, description, and premium left-aligned feature cards */}
+        <div className="space-y-6 text-left flex-1 max-w-2xl lg:max-w-xl">
           <div className="space-y-3">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">
+            <div className="flex items-center gap-2 text-sm font-mono text-gray-500 uppercase tracking-widest">
+              <Lightning weight="duotone" className="w-4.5 h-4.5" />
+              <span>Simulated Interaction Demo</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
               Execution Flow & Verification
             </h2>
-            <p className="text-base sm:text-[18px] text-gray-300 leading-relaxed">
-              When a user interacts with the Telegram chat interface below, it triggers the active n8n automation workflow in real-time:
+            <p className="text-base sm:text-lg text-[var(--color-on-surface-variant)] leading-relaxed">
+              When a user interacts with the Telegram chat interface, it triggers the active n8n automation workflow in real-time. Test the live interactive bot prototype on the phone frame to see the system in action.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto pt-2">
-            <div className="flex items-center gap-2.5 text-left bg-neutral-950 border border-[#262626] rounded-xl p-4 flex-1">
-              <Check className="w-5 h-5 text-neutral-400 shrink-0 mt-0.5" />
-              <span className="text-base text-gray-300">
-                <strong className="text-white">Instant Data Lookup:</strong> Reads spreadsheet items and formats a clean reply.
-              </span>
+          <div className="space-y-4 pt-2">
+            <div className="component-card flex gap-4 items-start p-5">
+              <div className="p-3 rounded-lg bg-[var(--color-surface-container-high)] border border-[var(--color-outline)] text-white shrink-0 mt-0.5">
+                <Check className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-base font-bold text-white">Instant Data Lookup</h4>
+                <p className="text-sm text-[var(--color-on-surface-variant)] leading-relaxed">
+                  Reads spreadsheet items from the Google Sheets database and formats a clean markdown reply automatically.
+                </p>
+              </div>
             </div>
-            <div className="flex items-center gap-2.5 text-left bg-neutral-950 border border-[#262626] rounded-xl p-4 flex-1">
-              <Check className="w-5 h-5 text-neutral-400 shrink-0 mt-0.5" />
-              <span className="text-base text-gray-300">
-                <strong className="text-white">Smart Routing:</strong> Routes orders and tickets automatically via logic branches.
-              </span>
+
+            <div className="component-card flex gap-4 items-start p-5">
+              <div className="p-3 rounded-lg bg-[var(--color-surface-container-high)] border border-[var(--color-outline)] text-white shrink-0 mt-0.5">
+                <Check className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-base font-bold text-white">Smart Routing</h4>
+                <p className="text-sm text-[var(--color-on-surface-variant)] leading-relaxed">
+                  Routes orders, support tickets, and pricing queries dynamically via logical decision branches.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Premium Bezel-less Smartphone Mockup Centered holding TelegramMock */}
-        <div className="flex flex-col items-center justify-center w-full relative py-6">
+        {/* Right side: Smartphone Mockup Frame */}
+        <div className="flex flex-col items-center justify-center shrink-0 w-full lg:w-auto relative py-6">
           <div className="w-full text-center mb-6">
             <h4 className="text-xs sm:text-sm font-mono text-gray-500 uppercase tracking-wider">
               Simulated Interaction Verification
@@ -115,16 +131,16 @@ export default function Home() {
           </div>
           
           {/* Interactive Phone Container with Buttons */}
-          <div className="relative mx-auto w-full flex justify-center">
-            {/* Volume Up Button (hidden on mobile to prevent overflow) */}
-            <div className="hidden sm:block absolute left-[calc(50%-202px)] top-[120px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg z-10" />
-            {/* Volume Down Button (hidden on mobile to prevent overflow) */}
-            <div className="hidden sm:block absolute left-[calc(50%-202px)] top-[180px] w-[4px] h-[45px] bg-[#222] border-r border-[#333] rounded-l-md shadow-lg z-10" />
-            {/* Action / Power Button (hidden on mobile to prevent overflow) */}
-            <div className="hidden sm:block absolute right-[calc(50%-202px)] top-[150px] w-[4px] h-[65px] bg-[#222] border-l border-[#333] rounded-r-md shadow-lg z-10" />
+          <div className="relative w-fit mx-auto">
+            {/* Volume Up Button */}
+            <div className="hidden sm:block absolute -left-[14px] top-[120px] w-[4px] h-[45px] bg-[#2d2d34] border-r border-[#1a1a1e] rounded-l-md shadow-lg z-10" />
+            {/* Volume Down Button */}
+            <div className="hidden sm:block absolute -left-[14px] top-[180px] w-[4px] h-[45px] bg-[#2d2d34] border-r border-[#1a1a1e] rounded-l-md shadow-lg z-10" />
+            {/* Action / Power Button */}
+            <div className="hidden sm:block absolute -right-[14px] top-[150px] w-[4px] h-[65px] bg-[#2d2d34] border-l border-[#1a1a1e] rounded-r-md shadow-lg z-10" />
 
             {/* Simple & Premium Smartphone Mockup Chassis */}
-            <div className="phone-container-frame mx-auto">
+            <div className="phone-container-frame">
               {/* Dynamic Island Floating Notch */}
               <div className="absolute top-3.5 left-1/2 -translate-x-1/2 w-[110px] h-[28px] bg-black rounded-full z-45 flex items-center justify-between px-3.5 shadow-inner border border-neutral-950 select-none pointer-events-none">
                 {/* Camera Lens Reflection */}
